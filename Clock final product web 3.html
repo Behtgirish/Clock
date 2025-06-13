@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Clock</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #141e30, #243b55);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      margin: 0;
+    }
+    .clock {
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 40px 60px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    .time {
+      font-size: 60px;
+      letter-spacing: 2px;
+    }
+    .date {
+      margin-top: 10px;
+      font-size: 20px;
+      color: #ddd;
+    }
+    .select-wrapper {
+      margin-top: 20px;
+    }
+    select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock">
+    <h1>World Clock</h1>
+    <div class="time" id="time">--:--:--</div>
+    <div class="date" id="date">Loading...</div>
+    <div class="select-wrapper">
+      <label for="timezone">Select Country:</label>
+      <select id="timezone" onchange="updateClock()">
+        <option value="America/Vancouver">Canada (Vancouver)</option>
+        <option value="Asia/Tokyo">Japan (Tokyo)</option>
+        <option value="Europe/London">UK (London)</option>
+        <option value="America/New_York">USA (New York)</option>
+        <option value="Asia/Kolkata">India (New Delhi)</option>
+      </select>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const timezone = document.getElementById('timezone').value;
+      const now = new Date();
+
+      const options = {
+        timeZone: timezone,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      };
+
+      const dateOptions = {
+        timeZone: timezone,
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+
+      const timeStr = new Intl.DateTimeFormat('en-CA', options).format(now);
+      const dateStr = new Intl.DateTimeFormat('en-CA', dateOptions).format(now);
+
+      document.getElementById('time').textContent = timeStr;
+      document.getElementById('date').textContent = dateStr;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
